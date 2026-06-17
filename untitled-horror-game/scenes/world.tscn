@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bsgcc7y4eqqko"]
+
+[ext_resource type="Script" uid="uid://bky6h7ud57a5t" path="res://scenes/world.gd" id="1_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://k75fyddkupdn" path="res://scenes/player.tscn" id="1_f3sb7"]
+[ext_resource type="Texture2D" uid="uid://bqgunva136eiv" path="res://art/tiles.png" id="1_rwgxs"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4wyf3"]
+texture = ExtResource("1_rwgxs")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_k0juu"]
+physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 1
+sources/0 = SubResource("TileSetAtlasSource_4wyf3")
+
+[node name="World" type="Node2D" unique_id=83307494]
+script = ExtResource("1_4wyf3")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=524908926]
+scale = Vector2(2, 2)
+tile_set = SubResource("TileSet_k0juu")
+
+[node name="player" parent="." unique_id=1988847177 instance=ExtResource("1_f3sb7")]
+position = Vector2(77, 78)
+scale = Vector2(3, 3)
