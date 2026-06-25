@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://c0mu8w0k2vt5w"]
+
+[ext_resource type="Script" uid="uid://dulqjpxqkgf2f" path="res://scripts/loading_screen.gd" id="1_ep5rh"]
+
+[node name="Loading Screen" type="Node" unique_id=804653749]
+script = ExtResource("1_ep5rh")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=502346166]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -73.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=443071419]
+layout_mode = 2
+
+[node name="Loading" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2101432041]
+layout_mode = 2
+text = "LOADING"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer" unique_id=1299049974]
+layout_mode = 2
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="." unique_id=400461994]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
