@@ -9,6 +9,7 @@ enum states{
 	chase,
 	roam
 }
+var chances = 0
 var movement_delta: float
 var target = null
 var next_position: Vector2
@@ -63,13 +64,19 @@ func _on_navigation_timer_timeout() -> void:
 
 func _on_roam_timer_timeout() -> void:
 	randomize()
-	navigation_agent_2d.target_position = Vector2(randf_range(position.x - 128,position.x + 128), randf_range(position.y - 128,position.y + 128))
+	roam(128)
 
+func roam(distance: float):
+	navigation_agent_2d.target_position = Vector2(randf_range(position.x - distance,position.x + distance), randf_range(position.y - distance,position.y + distance))
+	$hitbox.monitoring = true
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.has_method("player"):
 		match Global.difficulty:
 			Global.Difficulties.Normal:
-				print("Normal")
+				if chances < 2:
+					roam(256)
+					chances+=1
+					$hitbox.monitoring = false
 			Global.Difficulties.Hard:
 				print("Hard")

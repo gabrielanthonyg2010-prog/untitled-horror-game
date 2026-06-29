@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ckd5tvyxr07fc" path="res://scripts/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://dybtujaqsdarj" path="res://art/gloob.png" id="2_i3pqv"]
-[ext_resource type="Shader" uid="uid://c8ohoomkd7ff0" path="res://shaders/vignette.gdshader" id="3_qhqgy"]
+[ext_resource type="Shader" uid="uid://c8ohoomkd7ff0" path="res://Other stuff/vignette.gdshader" id="3_qhqgy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_urp6f"]
 radius = 11.7046995

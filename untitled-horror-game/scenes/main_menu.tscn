@@ -1,9 +1,10 @@
 [gd_scene format=4 uid="uid://nkbxf2ruxaig"]
 
 [ext_resource type="Texture2D" uid="uid://bqgunva136eiv" path="res://art/tiles.png" id="1_bqqt6"]
-[ext_resource type="Theme" uid="uid://cawgjyxr8ofuf" path="res://shaders/button.tres" id="1_ekxnf"]
+[ext_resource type="Theme" uid="uid://cawgjyxr8ofuf" path="res://Other stuff/button.tres" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://dybtujaqsdarj" path="res://art/gloob.png" id="1_l6cm7"]
 [ext_resource type="Script" uid="uid://g7hklslecxi6" path="res://scripts/main_menu.gd" id="1_wu84c"]
+[ext_resource type="ButtonGroup" uid="uid://c64cl5af43jjx" path="res://Other stuff/difficulty_groupd.tres" id="5_8ln24"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wu84c"]
 texture = ExtResource("1_bqqt6")
@@ -168,14 +169,9 @@ Label/constants/line_spacing = 3
 Label/constants/outline_size = 10
 Label/font_sizes/font_size = 32
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_n2fwo"]
-allow_unpress = true
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_07w8r"]
-allow_unpress = true
-
 [node name="Main Menu" type="Node" unique_id=522233976]
 script = ExtResource("1_wu84c")
+difficulty_groupd = ExtResource("5_8ln24")
 metadata/_edit_horizontal_guides_ = [0.0, 360.0]
 metadata/_edit_vertical_guides_ = [640.0]
 
@@ -277,7 +273,8 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_ekxnf")
 toggle_mode = true
-button_group = SubResource("ButtonGroup_n2fwo")
+button_pressed = true
+button_group = ExtResource("5_8ln24")
 text = "NORMAL"
 
 [node name="HARD" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=725481653]
@@ -285,7 +282,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_ekxnf")
 toggle_mode = true
-button_group = SubResource("ButtonGroup_07w8r")
+button_group = ExtResource("5_8ln24")
 text = "HARD"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CONTINUE" to="." method="_on_continue_pressed"]
