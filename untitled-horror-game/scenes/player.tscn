@@ -91,27 +91,30 @@ collision_mask = 0
 script = ExtResource("1_onrkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1730493712]
-position = Vector2(0, -5)
+position = Vector2(10, 11)
 shape = SubResource("CircleShape2D_urp6f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=239912194]
-position = Vector2(0, -5)
+position = Vector2(10, 11)
 sprite_frames = SubResource("SpriteFrames_ivps1")
 animation = &"walk"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1072133457]
+position = Vector2(10, 16)
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=170296733]
 z_index = 10
 material = SubResource("ShaderMaterial_dqkch")
-offset_left = -320.0
-offset_top = -325.0
-offset_right = 320.0
-offset_bottom = 315.0
+offset_left = -310.0
+offset_top = -309.0
+offset_right = 330.0
+offset_bottom = 331.0
 metadata/_edit_group_ = true
 
 [node name="hitbox" type="Area2D" parent="." unique_id=305071533]
+position = Vector2(10, 16)
 collision_layer = 0
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=387639564]
 position = Vector2(0, -5)

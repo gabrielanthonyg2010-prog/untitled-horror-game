@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://bky6h7ud57a5t" path="res://scripts/world.gd" id="1_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://k75fyddkupdn" path="res://scenes/player.tscn" id="1_f3sb7"]
 [ext_resource type="Texture2D" uid="uid://bqgunva136eiv" path="res://art/tiles.png" id="1_rwgxs"]
+[ext_resource type="Script" uid="uid://cq25vl785jwod" path="res://scripts/navigation_region_2d.gd" id="3_k0juu"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_g4v7s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k0juu"]
 texture = ExtResource("1_rwgxs")
@@ -44,13 +47,20 @@ sources/0 = SubResource("TileSetAtlasSource_4wyf3")
 [node name="World" type="Node2D" unique_id=83307494]
 script = ExtResource("1_4wyf3")
 
-[node name="floor" type="TileMapLayer" parent="." unique_id=2134111286]
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=692352831]
+navigation_polygon = SubResource("NavigationPolygon_g4v7s")
+navigation_layers = 65535
+script = ExtResource("3_k0juu")
+
+[node name="floor" type="TileMapLayer" parent="NavigationRegion2D" unique_id=2134111286]
 tile_set = SubResource("TileSet_71j4m")
 
-[node name="walls" type="TileMapLayer" parent="." unique_id=1111703596]
+[node name="walls" type="TileMapLayer" parent="NavigationRegion2D" unique_id=1111703596]
 tile_set = SubResource("TileSet_k0juu")
 
 [node name="player" parent="." unique_id=1988847177 instance=ExtResource("1_f3sb7")]
 position = Vector2(38, 39)
 collision_layer = 1
 collision_mask = 1
+
+[connection signal="maze_loaded" from="." to="NavigationRegion2D" method="_on_world_maze_loaded"]

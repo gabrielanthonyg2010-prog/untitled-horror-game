@@ -3,9 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://bh7yd448psgsb" path="res://art/big scary.png" id="1_dh3xe"]
 [ext_resource type="Script" uid="uid://tjeop3s16vlv" path="res://scripts/big_scary.gd" id="1_g1i6n"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_yf5fn"]
-radius = 26.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_2lk80"]
 atlas = ExtResource("1_dh3xe")
 region = Rect2(704, 0, 64, 180)
@@ -98,15 +95,62 @@ animations = [{
 "speed": 4.0
 }]
 
-[node name="BigScary" type="StaticBody2D" unique_id=1082588644]
+[sub_resource type="CircleShape2D" id="CircleShape2D_g4v7s"]
+radius = 123.35721
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_57qmd"]
+radius = 217.81644
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yf5fn"]
+radius = 22.0
+
+[node name="BigScary" type="CharacterBody2D" unique_id=1712768331]
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_g1i6n")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=98646177]
+position = Vector2(0, -80)
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1991979547]
+path_max_distance = 1000.0
+debug_enabled = true
+debug_path_custom_color = Color(1, 0, 0, 1)
+
+[node name="Vision" type="Area2D" parent="." unique_id=767625454]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision" unique_id=1051274170]
+position = Vector2(0, -80)
+shape = SubResource("CircleShape2D_g4v7s")
+
+[node name="ChaseDistance" type="Area2D" parent="." unique_id=531197129]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseDistance" unique_id=434012538]
+position = Vector2(0, -80)
+shape = SubResource("CircleShape2D_57qmd")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=292226733]
-position = Vector2(-1, 65)
 shape = SubResource("CircleShape2D_yf5fn")
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=98646177]
-position = Vector2(-1, -6)
-sprite_frames = SubResource("SpriteFrames_g4v7s")
-frame_progress = 0.99441403
+[node name="navigation_timer" type="Timer" parent="." unique_id=1410960839]
+process_callback = 0
+wait_time = 0.25
+autostart = true
+
+[node name="roam_timer" type="Timer" parent="." unique_id=619282557]
+wait_time = 3.0
+one_shot = true
+
+[node name="hitbox" type="Area2D" parent="." unique_id=1122540458]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="hitbox" unique_id=129291269]
+shape = SubResource("CircleShape2D_yf5fn")
+metadata/_edit_group_ = true
+
+[connection signal="body_entered" from="Vision" to="." method="_on_vision_body_entered"]
+[connection signal="body_exited" from="ChaseDistance" to="." method="_on_chase_distance_body_exited"]
+[connection signal="timeout" from="navigation_timer" to="." method="_on_navigation_timer_timeout"]
+[connection signal="timeout" from="roam_timer" to="." method="_on_roam_timer_timeout"]
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]

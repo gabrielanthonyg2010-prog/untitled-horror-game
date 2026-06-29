@@ -1,5 +1,6 @@
-extends Node2D
+extends Node
 
+@onready var panel_container: PanelContainer = $PanelContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,6 +17,9 @@ func _on_continue_pressed() -> void:
 	var t0 = Time.get_ticks_msec()
 	get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 	print("Game start: ", Time.get_ticks_msec() - t0, "ms")
+
+func _on_difficulties_pressed() -> void:
+	panel_container.visible = true
 
 
 func _on_quit_pressed() -> void:

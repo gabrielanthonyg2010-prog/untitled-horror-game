@@ -2,12 +2,13 @@ extends Node2D
 
 signal maze_loaded
 
-@onready var ground: TileMapLayer = $floor
-@onready var maze: TileMapLayer = $walls
+@onready var ground: TileMapLayer = $NavigationRegion2D/floor
+@onready var maze: TileMapLayer = $NavigationRegion2D/walls
+@onready var navigation_region_2d: NavigationRegion2D = $NavigationRegion2D
 
-const tile_margins: int =40
-const maze_width:int =3
-const maze_height:int =3
+const tile_margins: int = 9
+var maze_width:int = Global.maze_width
+var maze_height:int = Global.maze_height
 var walls: Dictionary = {}
 var tile_direction: String
 var flip_h:= TileSetAtlasSource.TRANSFORM_FLIP_H
@@ -40,20 +41,17 @@ func _ready() -> void:
 	make_border_walls()
 	print("Border walls: ", Time.get_ticks_msec() - t1, "ms")
 	var t2 = Time.get_ticks_msec()
-	make_maze()
+	await make_maze()
+	add_loops(0.13)
+	for z in walls.keys():
+		set_tile(z)
 	print("Maze: ", Time.get_ticks_msec() - t2, "ms")
 	add_entities(4)
 	maze_loaded.emit()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
-
 func make_floor():
-	var margin = 9  # tiles of floor padding around the maze, not 40
-	for i in range(-margin, maze_width + margin):
-		for x in range(-margin, maze_height + margin):
+	for i in range(-tile_margins, maze_width + tile_margins):
+		for x in range(-tile_margins, maze_height + tile_margins):
 			ground.set_cell(Vector2i(i,x), 0, Vector2i(0,4))
 
 func make_border_walls():
@@ -111,8 +109,16 @@ func make_maze():
 		if tiles_explored.is_empty():
 			break
 	await check_for_spaces()
-	for z in walls.keys():
-		set_tile(z)
+
+func add_loops(loop_chance: float):
+	for x in range(1,maze_width,2):
+		for y in range(1,maze_height,2):
+			if x + 2 < maze_width:
+				if randi_range(1,99) < loop_chance*100:
+					walls.erase(Vector2i(x+1,y))
+			if y + 2 < maze_width:
+				if randi_range(1,99) < loop_chance*100:
+					walls.erase(Vector2i(x,y+1))
 
 func check_for_spaces():
 	for i in range(0,maze_width-1,2):
@@ -120,7 +126,6 @@ func check_for_spaces():
 			var tiles = check_surrounding_tiles(Vector2i(i,x),"tiles")
 			if len(tiles) == 0:
 				walls[(Vector2i(i,x))] = true
-
 
 func check_surrounding_tiles(current_tile: Vector2i, mode:String):
 	var tiles_available : Array = []
@@ -146,7 +151,6 @@ func check_surrounding_tiles(current_tile: Vector2i, mode:String):
 			return tiles_available
 		"directions":
 			return directions
-		
 
 
 func set_tile(current_tile:Vector2i):
@@ -179,13 +183,13 @@ func add_entities(number_of_cats):
 		print(cat)
 		$".".add_child(cat)
 		cat.cat_frame = i
-		var check_position = Vector2i((randi() % maze_width)*16,(randi() % maze_height)*16)
+		var check_position = Vector2i((randi() % maze_width)*32,(randi() % maze_height)*32)
 		while walls.has(check_position):
-			check_position = Vector2i((randi() % maze_width)*16,(randi() % maze_height)*16)
+			check_position = Vector2i((randi() % maze_width)*32,(randi() % maze_height)*32)
 		cat.global_position = check_position
 	var big_scary = big_scary_preload.instantiate()
 	$".".add_child(big_scary)
-	var check_position = Vector2i((randi() % maze_width)*16,(randi() % maze_height)*16)
-	while walls.has(check_position):
-		check_position = Vector2i((randi() % maze_width)*16,(randi() % maze_height)*16)
-	big_scary.global_position = check_position
+	var pos = Vector2i((randi() % maze_width)*32,(randi() % maze_height)*32)
+	while walls.has(pos):
+		pos = Vector2i((randi() % maze_width)*32,(randi() % maze_height)*32)
+	big_scary.global_position = pos
