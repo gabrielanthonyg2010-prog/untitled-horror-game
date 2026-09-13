@@ -5,7 +5,8 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	$Timer.wait_time = randf_range(0.5,1.5)
+	$Timer.start()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -14,3 +15,10 @@ func _process(_delta: float) -> void:
 
 func cat():
 	pass
+
+
+func _on_timer_timeout() -> void:
+	$Meow2Tmjbru.play()
+	$Meow2Tmjbru.pitch_scale = randf_range(0.75,1.5)
+	$Timer.wait_time = randf_range(2,4)
+	$Timer.start()

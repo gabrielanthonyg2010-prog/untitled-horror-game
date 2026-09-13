@@ -33,6 +33,7 @@ var norm_direction: Dictionary = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Global.cats_acquired = 0
 	randomize()
 	var t0 = Time.get_ticks_msec()
 	make_floor()

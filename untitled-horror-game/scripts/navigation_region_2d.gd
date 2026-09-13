@@ -15,7 +15,7 @@ func nav():
 	nav_polygon.add_outline(polygon)
 	navigation_polygon = nav_polygon
 	print(navigation_polygon)
-	await bake_navigation_polygon()
+	bake_navigation_polygon()
 
 
 

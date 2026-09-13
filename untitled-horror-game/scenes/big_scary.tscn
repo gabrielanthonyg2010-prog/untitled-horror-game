@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://bh7yd448psgsb" path="res://art/big scary.png" id="1_dh3xe"]
 [ext_resource type="Script" uid="uid://tjeop3s16vlv" path="res://scripts/big_scary.gd" id="1_g1i6n"]
+[ext_resource type="AudioStream" uid="uid://xkj3bvbpr3ep" path="res://sounds/bbfbba97-1150-46cf-9181-17533da4c60f.mp3" id="2_h1x4j"]
+[ext_resource type="AudioStream" uid="uid://dlli1w7ofd64a" path="res://sounds/freesound_community-jumpscare-94984.mp3" id="3_c65rv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2lk80"]
 atlas = ExtResource("1_dh3xe")
@@ -96,10 +98,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4v7s"]
-radius = 123.35721
+radius = 125.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_57qmd"]
-radius = 217.81644
+radius = 225.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yf5fn"]
 radius = 22.0
@@ -109,13 +111,20 @@ collision_layer = 4
 collision_mask = 4
 script = ExtResource("1_g1i6n")
 
+[node name="Bbfbba97115046Cf918117533Da4c60f" type="AudioStreamPlayer" parent="." unique_id=565494729]
+stream = ExtResource("2_h1x4j")
+volume_db = 24.0
+pitch_scale = 0.37
+
+[node name="FreesoundCommunityJumpscare94984" type="AudioStreamPlayer" parent="." unique_id=329894325]
+stream = ExtResource("3_c65rv")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=98646177]
 position = Vector2(0, -80)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1991979547]
 path_max_distance = 1000.0
-debug_enabled = true
 debug_path_custom_color = Color(1, 0, 0, 1)
 
 [node name="Vision" type="Area2D" parent="." unique_id=767625454]
@@ -136,7 +145,7 @@ metadata/_edit_group_ = true
 
 [node name="navigation_timer" type="Timer" parent="." unique_id=1410960839]
 process_callback = 0
-wait_time = 0.25
+wait_time = 0.5
 autostart = true
 
 [node name="roam_timer" type="Timer" parent="." unique_id=619282557]
@@ -149,8 +158,20 @@ one_shot = true
 shape = SubResource("CircleShape2D_yf5fn")
 metadata/_edit_group_ = true
 
+[node name="time_since_player" type="Timer" parent="." unique_id=112312799]
+wait_time = 15.0
+one_shot = true
+
+[node name="safe_for_player" type="Timer" parent="." unique_id=228402373]
+wait_time = 5.0
+
+[connection signal="finished" from="Bbfbba97115046Cf918117533Da4c60f" to="." method="_on_bbfbba_97115046_cf_918117533_da_4c_60f_finished"]
+[connection signal="finished" from="FreesoundCommunityJumpscare94984" to="." method="_on_freesound_community_jumpscare_94984_finished"]
 [connection signal="body_entered" from="Vision" to="." method="_on_vision_body_entered"]
+[connection signal="body_entered" from="ChaseDistance" to="." method="_on_chase_distance_body_entered"]
 [connection signal="body_exited" from="ChaseDistance" to="." method="_on_chase_distance_body_exited"]
 [connection signal="timeout" from="navigation_timer" to="." method="_on_navigation_timer_timeout"]
 [connection signal="timeout" from="roam_timer" to="." method="_on_roam_timer_timeout"]
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="time_since_player" to="." method="_on_time_since_player_timeout"]
+[connection signal="timeout" from="safe_for_player" to="." method="_on_safe_for_player_timeout"]

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ckd5tvyxr07fc" path="res://scripts/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://dybtujaqsdarj" path="res://art/gloob.png" id="2_i3pqv"]
 [ext_resource type="Shader" uid="uid://c8ohoomkd7ff0" path="res://Other stuff/vignette.gdshader" id="3_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://m6wm2s43weko" path="res://scenes/control.tscn" id="4_dqkch"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_urp6f"]
 radius = 11.7046995
@@ -109,6 +110,7 @@ offset_left = -310.0
 offset_top = -309.0
 offset_right = 330.0
 offset_bottom = 331.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
 metadata/_edit_group_ = true
 
 [node name="hitbox" type="Area2D" parent="." unique_id=305071533]
@@ -119,6 +121,13 @@ collision_mask = 7
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=387639564]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_g4v7s")
+
+[node name="Control" parent="." unique_id=95669699 instance=ExtResource("4_dqkch")]
+z_index = 11
+offset_left = -311.0
+offset_top = -165.0
+offset_right = -311.0
+offset_bottom = -165.0
 
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]

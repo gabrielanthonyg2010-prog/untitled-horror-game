@@ -22,10 +22,11 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_pressed("ui_accept"):
-		color_rect.visible = false
-	else:
-		color_rect.visible = true
+	#if Input.is_action_pressed("ui_accept"):
+		#color_rect.visible = false
+	#else:
+		#color_rect.visible = true
+	pass
 
 func animation():
 	var dir = Input.get_axis("ui_left","ui_right")
@@ -49,8 +50,11 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.has_method("cat"):
 		vision_circle_radius += 0.05
 		body.queue_free()
+		Global.cats_acquired += 1
+		if Global.cats_acquired == 4:
+			SceneTransitionScene.change_scene("res://scenes/win.tscn")
 	if body.has_method("big_scary"):
-		print("Jumpscare")
+		pass
 
 
 func _on_hitbox_body_exited(_body: Node2D) -> void:

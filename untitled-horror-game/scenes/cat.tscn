@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c0thfhk6bjj22" path="res://art/cats.png" id="1_myi5k"]
 [ext_resource type="Script" uid="uid://1lpk8l23l2x0" path="res://scripts/cat.gd" id="1_se5fe"]
+[ext_resource type="AudioStream" uid="uid://brwyaoda28p3x" path="res://sounds/meow_2Tmjbru.mp3" id="3_t8pth"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4v7s"]
 radius = 19.026299
@@ -20,3 +21,12 @@ hframes = 4
 region_enabled = true
 region_rect = Rect2(0, 8, 128, 24)
 metadata/_edit_group_ = true
+
+[node name="Timer" type="Timer" parent="." unique_id=356426]
+autostart = true
+
+[node name="Meow2Tmjbru" type="AudioStreamPlayer" parent="." unique_id=962960374]
+stream = ExtResource("3_t8pth")
+pitch_scale = 1.5
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
